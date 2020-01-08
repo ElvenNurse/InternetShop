@@ -1,5 +1,6 @@
 package mate.academy.internetshop.dao.impl;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import mate.academy.internetshop.model.User;
 public class UserDaoImpl implements UserDao {
     @Override
     public User create(User user) {
-        user.setId(IdGenerator.getId());
+        user.setId(IdGenerator.getUserId());
         Storage.users.add(user);
         return user;
     }
@@ -53,5 +54,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean delete(User user) {
         return Storage.users.remove(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return Storage.users;
     }
 }

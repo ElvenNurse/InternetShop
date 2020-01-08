@@ -15,7 +15,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item create(Item item) {
-        item.setId(IdGenerator.getId());
+        item.setId(IdGenerator.getItemId());
         Storage.items.add(item);
         return item;
     }
@@ -56,7 +56,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAll() {
         return Storage.items;
     }
 }

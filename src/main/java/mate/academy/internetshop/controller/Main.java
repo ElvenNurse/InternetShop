@@ -2,7 +2,6 @@ package mate.academy.internetshop.controller;
 
 import java.util.List;
 
-import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.model.Bucket;
@@ -55,7 +54,7 @@ public class Main {
 
         //Read items
         System.out.println("All items");
-        for (Item item : itemService.getAllItems()) {
+        for (Item item : itemService.getAll()) {
             System.out.println(item.getName());
         }
         System.out.println("\nItem by ID");
@@ -70,7 +69,7 @@ public class Main {
         System.out.println("\nDelete item");
         System.out.println(itemService.delete(item6));
         System.out.println(itemService.deleteById(item7.getId()));
-        for (Item item : itemService.getAllItems()) {
+        for (Item item : itemService.getAll()) {
             System.out.println(item.getName());
         }
 
@@ -88,7 +87,7 @@ public class Main {
 
         //Read users
         System.out.println("\nAll users");
-        for (User user : Storage.users) {
+        for (User user : userService.getAll()) {
             System.out.println(user.getUsername());
         }
         System.out.println("\nUser by ID");
@@ -103,7 +102,7 @@ public class Main {
         System.out.println("\nDelete user");
         System.out.println(userService.delete(user4));
         System.out.println(userService.deleteById(user5.getId()));
-        for (User user : Storage.users) {
+        for (User user : userService.getAll()) {
             System.out.println(user.getUsername());
         }
 
@@ -135,8 +134,8 @@ public class Main {
 
         //Read buckets
         System.out.println("\nAll buckets");
-        for (Bucket bucket : Storage.buckets) {
-            System.out.println("\nBucket id " + bucket.getId());
+        for (Bucket bucket : bucketService.getAll()) {
+            System.out.println("\nBucket ID " + bucket.getId());
             for (Item item : bucket.getItems()) {
                 System.out.println(item.getName());
             }
@@ -146,7 +145,14 @@ public class Main {
 
         //Update buckets
         System.out.println("\nUpdate bucket");
-        bucket5.addItem(item3);
+        bucketService.addItem(bucket5, item3);
+        bucketService.addItem(bucket5, item4);
+        System.out.println("Added items to bucket with ID " + bucket5.getId());
+        for (Item item : bucketService.update(bucket5).getItems()) {
+            System.out.println(item.getName());
+        }
+        bucketService.deleteItem(bucket5, item4);
+        System.out.println("Deleted item from bucket with ID " + bucket5.getId());
         for (Item item : bucketService.update(bucket5).getItems()) {
             System.out.println(item.getName());
         }
@@ -155,8 +161,8 @@ public class Main {
         System.out.println("\nDelete bucket");
         System.out.println(bucketService.delete(bucket4));
         System.out.println(bucketService.deleteById(bucket5.getId()));
-        for (Bucket bucket : Storage.buckets) {
-            System.out.println("Bucket id " + bucket.getId());
+        for (Bucket bucket : bucketService.getAll()) {
+            System.out.println("Bucket ID " + bucket.getId());
         }
 
         //Create orders
@@ -169,9 +175,7 @@ public class Main {
 
         //Read orders
         System.out.println("\nFirst time read orders");
-        printOrder(orderService.getUserOrders(user1));
-        printOrder(orderService.getUserOrders(user2));
-        printOrder(orderService.getUserOrders(user3));
+        printOrder(orderService.getAll());
 
         //Fill buckets
         bucketService.addItem(bucket1, item5);
@@ -192,9 +196,7 @@ public class Main {
 
         //Read all orders
         System.out.println("\nSecond time read orders");
-        printOrder(orderService.getUserOrders(user1));
-        printOrder(orderService.getUserOrders(user2));
-        printOrder(orderService.getUserOrders(user3));
+        printOrder(orderService.getAll());
         System.out.println("\nGet order by ID");
         Order order1 = orderService.getUserOrders(user1).get(0);
         System.out.println("Order ID " + order1.getId());
@@ -205,6 +207,7 @@ public class Main {
         //Update orders
         System.out.println("\nUpdate order");
         order1.getItems().remove(item1);
+        orderService.update(order1);
         printOrder(orderService.getUserOrders(user1));
 
         //Delete orders
@@ -214,15 +217,13 @@ public class Main {
         System.out.println(orderService.delete(order2));
         System.out.println(orderService.deleteById(order3.getId()));
         System.out.println("\nThird time read orders");
-        printOrder(orderService.getUserOrders(user1));
-        printOrder(orderService.getUserOrders(user2));
-        printOrder(orderService.getUserOrders(user3));
+        printOrder(orderService.getAll());
     }
 
     private static void printOrder(List<Order> orders) {
         for (Order order : orders) {
-            System.out.println("\nOrder id " + order.getId());
-            System.out.println("User id " + order.getUserId());
+            System.out.println("\nOrder ID " + order.getId());
+            System.out.println("User ID " + order.getUserId());
             for (Item item : order.getItems()) {
                 System.out.println(item.getName() + " " + item.getPrice());
             }

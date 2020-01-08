@@ -41,6 +41,11 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
+    public List<Bucket> getAll() {
+        return bucketDao.getAll();
+    }
+
+    @Override
     public void addItem(Bucket bucket, Item item) {
         bucket.addItem(item);
         update(bucket);
