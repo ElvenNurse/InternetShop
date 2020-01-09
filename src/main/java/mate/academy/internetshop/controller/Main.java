@@ -58,7 +58,7 @@ public class Main {
             System.out.println(item.getName());
         }
         System.out.println("\nItem by ID");
-        System.out.println(itemService.get(item1.getId()).get().getName());
+        System.out.println(itemService.get(item1.getId()).getName());
 
         //Update items
         System.out.println("\nUpdate item");
@@ -91,7 +91,7 @@ public class Main {
             System.out.println(user.getUsername());
         }
         System.out.println("\nUser by ID");
-        System.out.println(userService.get(user1.getId()).get().getUsername());
+        System.out.println(userService.get(user1.getId()).getUsername());
 
         //Update users
         System.out.println("\nUpdate user");
@@ -141,7 +141,7 @@ public class Main {
             }
         }
         System.out.println("\nBucket by ID");
-        System.out.println(bucketService.get(bucket1.getId()).get().getId());
+        System.out.println(bucketService.get(bucket1.getId()).getId());
 
         //Update buckets
         System.out.println("\nUpdate bucket");
@@ -200,7 +200,7 @@ public class Main {
         System.out.println("\nGet order by ID");
         Order order1 = orderService.getUserOrders(user1).get(0);
         System.out.println("Order ID " + order1.getId());
-        for (Item item : orderService.get(order1.getId()).get().getItems()) {
+        for (Item item : orderService.get(order1.getId()).getItems()) {
             System.out.println(item.getName());
         }
 

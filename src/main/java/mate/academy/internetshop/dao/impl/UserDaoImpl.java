@@ -29,11 +29,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        User old = Storage.users
-                .stream()
-                .filter(u -> u.getId().equals(user.getId()))
-                .findFirst()
-                .orElseThrow(() ->
+        User old = get(user.getId()).orElseThrow(() ->
                         new NoSuchElementException("Can't update user with id "
                                 + user.getId()));
         int index = Storage.users.indexOf(old);
@@ -42,11 +38,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean deleteById(Long id) {
-        User old = Storage.users
-                .stream()
-                .filter(u -> u.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() ->
+        User old = get(id).orElseThrow(() ->
                         new NoSuchElementException("Can't delete user with id " + id));
         return delete(old);
     }

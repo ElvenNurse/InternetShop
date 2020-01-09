@@ -29,24 +29,16 @@ public class BucketDaoImpl implements BucketDao {
 
     @Override
     public Bucket update(Bucket bucket) {
-        Bucket old = Storage.buckets
-                .stream()
-                .filter(b -> b.getId().equals(bucket.getId()))
-                .findFirst()
-                .orElseThrow(() ->
-                        new NoSuchElementException("Can't update bucket with id "
-                                + bucket.getId()));
+        Bucket old = get(bucket.getId()).orElseThrow(() ->
+                new NoSuchElementException("Can't update bucket with id "
+                        + bucket.getId()));
         int index = Storage.buckets.indexOf(old);
         return Storage.buckets.set(index, bucket);
     }
 
     @Override
     public boolean deleteById(Long id) {
-        Bucket old = Storage.buckets
-                .stream()
-                .filter(b -> b.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() ->
+        Bucket old = get(id).orElseThrow(() ->
                         new NoSuchElementException("Can't delete bucket with id " + id));
         return delete(old);
     }

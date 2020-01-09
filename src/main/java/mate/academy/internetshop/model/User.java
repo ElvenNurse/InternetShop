@@ -3,6 +3,9 @@ package mate.academy.internetshop.model;
 public class User {
     private Long id;
     private String username;
+    private String password;
+    private String firstName;
+    private String secondName;
 
     public User(String username) {
         this.username = username;
@@ -22,5 +25,39 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "id=" + id
+                + ", username='" + username + '\''
+                + ", firstName='" + firstName + '\''
+                + ", secondName='" + secondName + '\''
+                + '}';
     }
 }

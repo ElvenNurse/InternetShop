@@ -6,11 +6,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class IndexController extends HttpServlet {
+import mate.academy.internetshop.lib.Inject;
+import mate.academy.internetshop.service.UserService;
+
+public class DeleteUserController extends HttpServlet {
+    @Inject
+    private static UserService userService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+        String userId = req.getParameter("user_id");
+        userService.deleteById(Long.valueOf(userId));
+
+        resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
     }
 }

@@ -30,10 +30,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item update(Item item) {
-        Item old = Storage.items
-                .stream()
-                .filter(i -> i.getId().equals(item.getId()))
-                .findFirst().orElseThrow(() ->
+        Item old = get(item.getId()).orElseThrow(() ->
                         new NoSuchElementException("Can't update item with id "
                                 + item.getId()));
         int index = Storage.items.indexOf(old);
@@ -42,10 +39,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public boolean deleteById(Long id) {
-        Item old = Storage.items
-                .stream()
-                .filter(i -> i.getId().equals(id))
-                .findFirst().orElseThrow(() ->
+        Item old = get(id).orElseThrow(() ->
                         new NoSuchElementException("Can't delete item with id " + id));
         return delete(old);
     }
