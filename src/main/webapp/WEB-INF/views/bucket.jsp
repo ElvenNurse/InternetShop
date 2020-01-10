@@ -24,13 +24,13 @@
                 <c:out value="${item.price}" />
             </td>
             <td>
-                <a href="/internet_shop_war_exploded/servlet/deleteFromBucket?bucket_id=${bucket.id}&item_id=${item.id}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteFromBucket?bucket_id=${bucket.id}&item_id=${item.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<h3><a href="/internet_shop_war_exploded/servlet/completeOrder?bucket_id=${bucket.id}">Complete order</a></h3>
-<h3><a href="/internet_shop_war_exploded/shop">Return to SHOP</a></h3><br>
-<h3><a href="/internet_shop_war_exploded/index">Return to Main Page</a></h3>
+<h3><a href="${pageContext.request.contextPath}/servlet/completeOrder?bucket_id=${bucket.id}">Complete order</a></h3>
+<h3><a href="${pageContext.request.contextPath}/shop">Return to SHOP</a></h3><br>
+<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>

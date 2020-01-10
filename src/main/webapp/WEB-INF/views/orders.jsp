@@ -38,12 +38,12 @@
                 </table>
             </td>
             <td>
-                <a href="/internet_shop_war_exploded/servlet/deleteUserOrder?order_id=${order.id}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteUserOrder?order_id=${order.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<h3><a href="/internet_shop_war_exploded/shop">Return to SHOP</a></h3><br>
-<h3><a href="/internet_shop_war_exploded/index">Return to Main Page</a></h3>
+<h3><a href="${pageContext.request.contextPath}/shop">Return to SHOP</a></h3><br>
+<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>

@@ -10,7 +10,6 @@
 </head>
 <body>
 <b>${greeting}</b>, welcome to All Users page!<br>
-<a href="/internet_shop_war_exploded/servlet/registration">Register new user</a><br>
 Users :
 <table border="1">
     <tr>
@@ -20,26 +19,51 @@ Users :
         <th>Second Name</th>
         <th>Delete User</th>
     </tr>
-    <c:forEach var="item" items="${users}">
+    <c:forEach var="user" items="${users}">
         <tr>
             <td>
-                <c:out value="${item.id}" />
+                <c:out value="${user.id}" />
             </td>
             <td>
-                <c:out value="${item.username}" />
+                <c:out value="${user.username}" />
             </td>
             <td>
-                <c:out value="${item.firstName}" />
+                <c:out value="${user.firstName}" />
             </td>
             <td>
-                <c:out value="${item.secondName}" />
+                <c:out value="${user.secondName}" />
             </td>
             <td>
-                <a href="/internet_shop_war_exploded/servlet/deleteUser?user_id=${item.id}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteUser?user_id=${user.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<h3><a href="/internet_shop_war_exploded/index">Return to Main Page</a></h3>
+<form action="${pageContext.request.contextPath}/servlet/addUser" method="post">
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" id="username" name="username" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
+
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat" required>
+
+        <label for="firstName"><b>First Name</b></label>
+        <input type="text" placeholder="Enter First Name" id="firstName" name="firstName" required>
+
+        <label for="secondName"><b>Second Name</b></label>
+        <input type="text" placeholder="Enter Second Name" id="secondName" name="secondName" required>
+        <hr>
+
+        <button type="submit">Register</button>
+    </div>
+</form>
+<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>

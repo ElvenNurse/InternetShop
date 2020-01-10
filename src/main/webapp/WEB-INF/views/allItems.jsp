@@ -29,27 +29,27 @@ Items :
                 <c:out value="${item.price}" />
             </td>
             <td>
-                <a href="/internet_shop_war_exploded/servlet/deleteItem?item_id=${item.id}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteItem?item_id=${item.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<form action="/internet_shop_war_exploded/servlet/addItem" method="get">
+<form action="${pageContext.request.contextPath}/servlet/addItem" method="get">
     <div class="container">
         <h3>Add Item</h3>
         <p>Please fill in this form to add item.</p>
         <hr>
 
         <label for="itemName"><b>Item Name</b></label>
-        <input type="text" placeholder="Enter Item Name" name="itemName" required>
+        <input type="text" placeholder="Enter Item Name" id="itemName" name="itemName" required>
 
         <label for="price"><b>Price</b></label>
-        <input type="text" placeholder="Enter Price" name="price" required>
+        <input type="text" placeholder="Enter Price" id="price" name="price" required>
         <hr>
 
-        <button type="submit" class="addItembtn">Add item</button>
+        <button type="submit">Add item</button>
     </div>
 </form>
-<h3><a href="/internet_shop_war_exploded/index">Return to Main Page</a></h3>
+<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>

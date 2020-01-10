@@ -4,36 +4,36 @@
     <title>Registration</title>
 </head>
 <body>
-<form action="/internet_shop_war_exploded/servlet/registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" method="post">
     <div class="container">
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>
 
         <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <input type="text" placeholder="Enter Username" id="username" name="username" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
         <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+        <input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat" required>
 
         <label for="firstName"><b>First Name</b></label>
-        <input type="text" placeholder="Enter First Name" name="firstName" required>
+        <input type="text" placeholder="Enter First Name" id="firstName" name="firstName" required>
 
         <label for="secondName"><b>Second Name</b></label>
-        <input type="text" placeholder="Enter Second Name" name="secondName" required>
+        <input type="text" placeholder="Enter Second Name" id="secondName" name="secondName" required>
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-        <button type="submit" class="registerbtn">Register</button>
+        <button type="submit">Register</button>
     </div>
 
     <div class="container signin">
         <p>Already have an account? <a href="#">Sign in</a>.</p>
     </div>
 </form>
-<h3><a href="/internet_shop_war_exploded/index">Return to Main Page</a></h3>
+<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>
