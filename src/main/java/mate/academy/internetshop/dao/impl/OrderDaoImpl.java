@@ -29,10 +29,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order update(Order order) {
-        Order old = Storage.orders
-                .stream()
-                .filter(o -> o.getId().equals(order.getId()))
-                .findFirst().orElseThrow(() ->
+        Order old = get(order.getId()).orElseThrow(() ->
                         new NoSuchElementException("Can't update order with id "
                                 + order.getId()));
         int index = Storage.orders.indexOf(old);
@@ -41,10 +38,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean deleteById(Long id) {
-        Order old = Storage.orders
-                .stream()
-                .filter(o -> o.getId().equals(id))
-                .findFirst().orElseThrow(() ->
+        Order old = get(id).orElseThrow(() ->
                         new NoSuchElementException("Can't delete order with id " + id));
         return delete(old);
     }
