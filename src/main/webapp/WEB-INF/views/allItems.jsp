@@ -9,7 +9,24 @@
 </head>
 <body>
 Welcome to All Items page!<br>
-Items :
+<form action="${pageContext.request.contextPath}/servlet/addItem" method="get">
+    <div class="container">
+        <h3>Add Item</h3>
+        <p>Please fill in this form to add item.</p>
+        <hr>
+
+        <label for="itemName"><b>Item Name</b></label>
+        <input type="text" placeholder="Enter Item Name" id="itemName" name="itemName" required>
+
+        <label for="price"><b>Price</b></label>
+        <input type="text" placeholder="Enter Price" id="price" name="price" required>
+        <hr>
+
+        <button type="submit">Add item</button>
+    </div>
+</form>
+<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
+All Items :
 <table border="1">
     <tr>
         <th>ID</th>
@@ -34,22 +51,5 @@ Items :
         </tr>
     </c:forEach>
 </table>
-<form action="${pageContext.request.contextPath}/servlet/addItem" method="get">
-    <div class="container">
-        <h3>Add Item</h3>
-        <p>Please fill in this form to add item.</p>
-        <hr>
-
-        <label for="itemName"><b>Item Name</b></label>
-        <input type="text" placeholder="Enter Item Name" id="itemName" name="itemName" required>
-
-        <label for="price"><b>Price</b></label>
-        <input type="text" placeholder="Enter Price" id="price" name="price" required>
-        <hr>
-
-        <button type="submit">Add item</button>
-    </div>
-</form>
-<h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>

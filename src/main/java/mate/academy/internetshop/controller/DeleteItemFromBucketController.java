@@ -9,37 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
-import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
-import mate.academy.internetshop.service.UserService;
 
-public class AddToBucketController extends HttpServlet {
+public class DeleteItemFromBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
     @Inject
     private static ItemService itemService;
-    @Inject
-    private static UserService userService;
-
-    private static String userId = "1";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        //String userId = req.getParameter("user_id");
+        String bucketId = req.getParameter("bucket_id");
         String itemId = req.getParameter("item_id");
 
+        Bucket bucket = bucketService.get(Long.valueOf(bucketId));
         Item item = itemService.get(Long.valueOf(itemId));
-        User user = userService.get(Long.valueOf(userId));
-        Bucket bucket = bucketService.getAll()
-                .stream()
-                .filter(b -> b.getUserId().equals(user.getId()))
-                .findFirst()
-                .orElse(bucketService.create(new Bucket(user)));
-        bucketService.addItem(bucket, item);
+        bucketService.deleteItem(bucket, item);
 
-        resp.sendRedirect(req.getContextPath() + "/shop");
+        resp.sendRedirect(req.getContextPath() + "/bucket?user_id=" + bucket.getUserId());
     }
 }

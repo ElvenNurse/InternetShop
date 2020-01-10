@@ -11,7 +11,7 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.OrderService;
 import mate.academy.internetshop.service.UserService;
 
-public class OrdersController extends HttpServlet {
+public class GetUserOrdersController extends HttpServlet {
     @Inject
     private static OrderService orderService;
     @Inject
