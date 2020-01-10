@@ -23,7 +23,6 @@ public class GetUserOrdersController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        //String userId = req.getParameter("user_id");
         User user = userService.get(userId);
 
         req.setAttribute("orders", orderService.getUserOrders(user));

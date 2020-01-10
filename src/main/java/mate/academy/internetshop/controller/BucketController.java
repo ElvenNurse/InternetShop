@@ -24,7 +24,6 @@ public class BucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        //String userId = req.getParameter("user_id");
         User user = userService.get(userId);
         Bucket bucket = bucketService.getAll()
                 .stream()
