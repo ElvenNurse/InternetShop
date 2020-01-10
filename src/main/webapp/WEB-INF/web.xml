@@ -17,7 +17,6 @@
         <servlet-name>registration</servlet-name>
         <servlet-class>mate.academy.internetshop.controller.RegistrationController</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>registration</servlet-name>
         <url-pattern>/registration</url-pattern>

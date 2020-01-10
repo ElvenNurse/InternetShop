@@ -18,14 +18,14 @@ public class BucketController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static String userId = "1";
+    private static Long userId = 1L;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         //String userId = req.getParameter("user_id");
-        User user = userService.get(Long.valueOf(userId));
+        User user = userService.get(userId);
         Bucket bucket = bucketService.getAll()
                 .stream()
                 .filter(b -> b.getUserId().equals(user.getId()))
