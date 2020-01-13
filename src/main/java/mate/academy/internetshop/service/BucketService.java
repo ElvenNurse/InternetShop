@@ -4,8 +4,11 @@ import java.util.List;
 
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
+import mate.academy.internetshop.model.User;
 
 public interface BucketService extends GenericService<Bucket, Long> {
+
+    Bucket getByUser(User user);
 
     void addItem(Bucket bucket, Item item);
 

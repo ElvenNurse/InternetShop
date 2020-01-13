@@ -32,11 +32,7 @@ public class AddItemToBucketController extends HttpServlet {
 
         Item item = itemService.get(Long.valueOf(itemId));
         User user = userService.get(userId);
-        Bucket bucket = bucketService.getAll()
-                .stream()
-                .filter(b -> b.getUserId().equals(user.getId()))
-                .findFirst()
-                .orElse(bucketService.create(new Bucket(user)));
+        Bucket bucket = bucketService.getByUser(user);
         bucketService.addItem(bucket, item);
 
         resp.sendRedirect(req.getContextPath() + "/shop");
