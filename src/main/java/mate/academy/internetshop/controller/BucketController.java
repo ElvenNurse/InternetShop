@@ -25,11 +25,7 @@ public class BucketController extends HttpServlet {
             throws ServletException, IOException {
 
         User user = userService.get(userId);
-        Bucket bucket = bucketService.getAll()
-                .stream()
-                .filter(b -> b.getUserId().equals(user.getId()))
-                .findFirst()
-                .orElse(bucketService.create(new Bucket(user)));
+        Bucket bucket = bucketService.getByUser(user);
 
         req.setAttribute("bucket", bucket);
 

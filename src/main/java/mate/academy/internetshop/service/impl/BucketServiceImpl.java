@@ -8,6 +8,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
+import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 
 @Service
@@ -24,6 +25,15 @@ public class BucketServiceImpl implements BucketService {
     public Bucket get(Long id) {
         return bucketDao.get(id).orElseThrow(() ->
                 new NoSuchElementException("Can't find bucket with id " + id));
+    }
+
+    @Override
+    public Bucket getByUser(User user) {
+        return getAll()
+                .stream()
+                .filter(b -> b.getUserId().equals(user.getId()))
+                .findFirst()
+                .orElse(create(new Bucket(user)));
     }
 
     @Override
