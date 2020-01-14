@@ -9,26 +9,31 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
+import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
+import mate.academy.internetshop.service.UserService;
 
 public class DeleteItemFromBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
     @Inject
     private static ItemService itemService;
+    @Inject
+    private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String bucketId = req.getParameter("bucket_id");
-        String itemId = req.getParameter("item_id");
+        Long userId = (Long) req.getSession(true).getAttribute("user_id");
 
-        Bucket bucket = bucketService.get(Long.valueOf(bucketId));
+        User user = userService.get(userId);
+        Bucket bucket = bucketService.getByUser(user);
+        String itemId = req.getParameter("item_id");
         Item item = itemService.get(Long.valueOf(itemId));
         bucketService.deleteItem(bucket, item);
 
-        resp.sendRedirect(req.getContextPath() + "/bucket?user_id=" + bucket.getUserId());
+        resp.sendRedirect(req.getContextPath() + "/bucket");
     }
 }

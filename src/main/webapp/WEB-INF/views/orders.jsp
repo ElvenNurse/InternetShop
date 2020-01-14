@@ -8,6 +8,7 @@
     <title>Orders</title>
 </head>
 <body>
+<h2>Welcome, <b>${user_name}</b>, to your orders page!</h2><br><br>
 <table border="1">
     <tr>
         <th>Order ID</th>
