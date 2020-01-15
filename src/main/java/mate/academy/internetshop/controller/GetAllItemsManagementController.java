@@ -11,7 +11,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
-public class ShopController extends HttpServlet {
+public class GetAllItemsManagementController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
@@ -22,6 +22,6 @@ public class ShopController extends HttpServlet {
         List<Item> items = itemService.getAll();
         req.setAttribute("items", items);
 
-        req.getRequestDispatcher("/WEB-INF/views/shop.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/allItems.jsp").forward(req, resp);
     }
 }

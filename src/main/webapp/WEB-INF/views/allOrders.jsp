@@ -8,6 +8,7 @@
     <title>All Orders</title>
 </head>
 <body>
+Welcome to All Orders page!<br>
 <table border="1">
     <tr>
         <th>Order ID</th>

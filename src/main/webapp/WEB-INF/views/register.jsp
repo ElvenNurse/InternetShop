@@ -4,6 +4,7 @@
     <title>Registration</title>
 </head>
 <body>
+Welcome to Registration page!<br>
 <form action="${pageContext.request.contextPath}/registration" method="post">
     <div class="container">
         <h1>Register</h1>
@@ -27,11 +28,12 @@
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-        <button type="submit">Register</button>
+        <button type="submit">Register</button><br>
+        <h4 style="color: red"><b><i>${errorMsg}</i></b></h4>
     </div>
 
     <div class="container signin">
-        <p>Already have an account? <a href="#">Sign in</a>.</p>
+        <p>Already have an account? <a href="${pageContext.request.contextPath}/login">Sign in</a>.</p>
     </div>
 </form>
 <h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>

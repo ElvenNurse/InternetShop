@@ -18,16 +18,17 @@ public class BucketController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Long userId = 1L;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        Long userId = (Long) req.getSession().getAttribute("user_id");
 
         User user = userService.get(userId);
         Bucket bucket = bucketService.getByUser(user);
 
         req.setAttribute("bucket", bucket);
+        req.setAttribute("user_name", user.getFirstName());
 
         req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }

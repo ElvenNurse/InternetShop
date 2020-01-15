@@ -6,6 +6,7 @@ public class User {
     private String password;
     private String firstName;
     private String secondName;
+    private String token;
 
     public User(String username) {
         this.username = username;
@@ -49,6 +50,14 @@ public class User {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

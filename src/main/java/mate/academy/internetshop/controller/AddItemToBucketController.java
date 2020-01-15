@@ -22,11 +22,11 @@ public class AddItemToBucketController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Long userId = 1L;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        Long userId = (Long) req.getSession().getAttribute("user_id");
 
         String itemId = req.getParameter("item_id");
 

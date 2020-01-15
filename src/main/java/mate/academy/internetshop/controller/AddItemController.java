@@ -15,7 +15,7 @@ public class AddItemController extends HttpServlet {
     private static ItemService itemService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         Item newItem = new Item(req.getParameter("itemName"),

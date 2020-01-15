@@ -9,7 +9,7 @@
 </head>
 <body>
 Welcome to All Items page!<br>
-<form action="${pageContext.request.contextPath}/servlet/addItem" method="get">
+<form action="${pageContext.request.contextPath}/servlet/addItem" method="post">
     <div class="container">
         <h3>Add Item</h3>
         <p>Please fill in this form to add item.</p>
