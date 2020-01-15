@@ -33,7 +33,7 @@
 
     <servlet>
         <servlet-name>shop</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.GetAllItems</servlet-class>
+        <servlet-class>mate.academy.internetshop.controller.GetAllItemsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>shop</servlet-name>

@@ -28,7 +28,8 @@ Welcome to Registration page!<br>
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-        <button type="submit">Register</button>
+        <button type="submit">Register</button><br>
+        <h4 style="color: red"><b><i>${errorMsg}</i></b></h4>
     </div>
 
     <div class="container signin">

@@ -27,7 +27,12 @@ public class RegistrationController extends HttpServlet {
             throws ServletException, IOException {
 
         User newUser = new User(req.getParameter("username"));
-        newUser.setPassword(req.getParameter("psw"));
+        if (req.getParameter("psw").equals(req.getParameter("psw-repeat"))) {
+            newUser.setPassword(req.getParameter("psw"));
+        } else {
+            req.setAttribute("errorMsg", "Passwords are not matching");
+            req.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(req, resp);
+        }
         newUser.setFirstName(req.getParameter("firstName"));
         newUser.setSecondName(req.getParameter("secondName"));
         User user = userService.create(newUser);

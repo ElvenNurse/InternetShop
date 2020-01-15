@@ -11,7 +11,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
-public class GetAllItems extends HttpServlet {
+public class GetAllItemsController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 

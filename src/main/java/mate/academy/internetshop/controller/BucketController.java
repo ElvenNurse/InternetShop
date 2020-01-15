@@ -22,7 +22,7 @@ public class BucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Long userId = (Long) req.getSession(true).getAttribute("user_id");
+        Long userId = (Long) req.getSession().getAttribute("user_id");
 
         User user = userService.get(userId);
         Bucket bucket = bucketService.getByUser(user);
