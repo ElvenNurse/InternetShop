@@ -20,6 +20,12 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        int isLogged = 0;
+        if (req.getSession().getAttribute("user_id") != null) {
+            isLogged = 1;
+        }
+        req.setAttribute("is_logged", Integer.valueOf(isLogged));
+
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
 

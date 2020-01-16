@@ -1,3 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="is_logged" scope="request" type="java.lang.Integer"/>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -5,6 +9,7 @@
 </head>
 <body>
 Welcome to Registration page!<br>
+<c:if test = "${is_logged == 0}">
 <form action="${pageContext.request.contextPath}/registration" method="post">
     <div class="container">
         <h1>Register</h1>
@@ -36,6 +41,11 @@ Welcome to Registration page!<br>
         <p>Already have an account? <a href="${pageContext.request.contextPath}/login">Sign in</a>.</p>
     </div>
 </form>
+</c:if>
+<c:if test = "${is_logged == 1}">
+    <h3>You are logged in, to register new user -
+        <a href="${pageContext.request.contextPath}/login">logout</a></h3>
+</c:if>
 <h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>
