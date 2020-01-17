@@ -46,7 +46,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>shop</servlet-name>
-        <url-pattern>/shop</url-pattern>
+        <url-pattern>/user/shop</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -55,7 +55,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>bucket</servlet-name>
-        <url-pattern>/bucket</url-pattern>
+        <url-pattern>/user/bucket</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -64,7 +64,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>orders</servlet-name>
-        <url-pattern>/orders</url-pattern>
+        <url-pattern>/user/orders</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -191,9 +191,8 @@
     <filter-mapping>
         <filter-name>auth-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
+        <url-pattern>/user/*</url-pattern>
         <servlet-name>index</servlet-name>
-        <servlet-name>bucket</servlet-name>
-        <servlet-name>orders</servlet-name>
     </filter-mapping>
 
     <filter>
@@ -203,8 +202,7 @@
     <filter-mapping>
         <filter-name>authorization-filter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
-        <servlet-name>bucket</servlet-name>
-        <servlet-name>orders</servlet-name>
+        <url-pattern>/user/*</url-pattern>
     </filter-mapping>
 
     <listener>

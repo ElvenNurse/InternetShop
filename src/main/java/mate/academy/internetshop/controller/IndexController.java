@@ -24,14 +24,8 @@ public class IndexController extends HttpServlet {
         User user = userService.get(userId);
         req.setAttribute("username", user.getUsername());
 
-        int isUser = 0;
-        if (verifyRole(user, Role.RoleName.USER)) {
-            isUser = 1;
-        }
-        int isAdmin = 0;
-        if (verifyRole(user, Role.RoleName.ADMIN)) {
-            isAdmin = 1;
-        }
+        Integer isUser = verifyRole(user, Role.RoleName.USER) ? 1 : 0;
+        Integer isAdmin = verifyRole(user, Role.RoleName.ADMIN) ? 1 : 0;
         req.setAttribute("is_user", isUser);
         req.setAttribute("is_admin", isAdmin);
 

@@ -9,15 +9,15 @@
     <body>
         <h2>Hello, ${username}! It's Main Page</h2><br>
         <c:if test = "${is_user == 1}">
-            <h3><a href="${pageContext.request.contextPath}/shop">Go to SHOP</a></h3>
-            <h3><a href="${pageContext.request.contextPath}/bucket">Check your bucket</a></h3>
-            <h3><a href="${pageContext.request.contextPath}/orders">Check your orders</a></h3><br>
+            <h3><a href="${pageContext.request.contextPath}/user/shop">Go to SHOP</a></h3>
+            <h3><a href="${pageContext.request.contextPath}/user/bucket">Check your bucket</a></h3>
+            <h3><a href="${pageContext.request.contextPath}/user/orders">Check your orders</a></h3><br>
         </c:if>
         <c:if test = "${is_admin == 1}">
             <h3><a href="${pageContext.request.contextPath}/servlet/getAllItems">Add items to shop</a></h3>
             <h3><a href="${pageContext.request.contextPath}/servlet/getAllUsers">Check all users</a></h3>
             <h3><a href="${pageContext.request.contextPath}/servlet/getAllOrders">Check all orders</a></h3><br>
         </c:if>
-        <h4><a href="${pageContext.request.contextPath}/login">Logout</a></h4><br>
+        <h4><a href="${pageContext.request.contextPath}/logout">Logout</a></h4><br>
     </body>
 </html>

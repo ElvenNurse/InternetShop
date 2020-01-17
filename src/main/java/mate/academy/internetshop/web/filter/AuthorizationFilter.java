@@ -6,14 +6,12 @@ import static mate.academy.internetshop.model.Role.RoleName.USER;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,54 +38,36 @@ public class AuthorizationFilter implements Filter {
         protectedUrls.put("/servlet/deleteItem", ADMIN);
         protectedUrls.put("/servlet/getAllOrders", ADMIN);
         protectedUrls.put("/servlet/deleteOrder", ADMIN);
-        protectedUrls.put("/shop", USER);
-        protectedUrls.put("/bucket", USER);
+        protectedUrls.put("/user/shop", USER);
+        protectedUrls.put("/user/bucket", USER);
         protectedUrls.put("/servlet/addToBucket", USER);
         protectedUrls.put("/servlet/deleteFromBucket", USER);
         protectedUrls.put("/servlet/completeOrder", USER);
-        protectedUrls.put("/orders", USER);
+        protectedUrls.put("/user/orders", USER);
         protectedUrls.put("/servlet/deleteUserOrder", USER);
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        Cookie[] cookies = req.getCookies();
-        if (cookies == null) {
-            processUnAuthenticated(req, resp);
-            return;
-        }
-
         String requestedUrl = req.getRequestURI().replace(req.getContextPath(), EMPTY_STRING);
         Role.RoleName roleName = protectedUrls.get(requestedUrl);
+
         if (roleName == null) {
-            processAuthenticated(req, resp, chain);
+            processAuthorized(req, resp, chain);
             return;
         }
 
-        String token = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("MATE")) {
-                token = cookie.getValue();
-                break;
-            }
-        }
-        if (token == null) {
-            processUnAuthenticated(req, resp);
+        Long userId = (Long) req.getSession().getAttribute("user_id");
+        User user = userService.get(userId);
+        if (verifyRole(user, roleName)) {
+            processAuthorized(req, resp, chain);
         } else {
-            Optional<User> user = userService.getByToken(token);
-            if (user.isPresent()) {
-                if (verifyRole(user.get(), roleName)) {
-                    processAuthenticated(req, resp, chain);
-                } else {
-                    processDenied(req, resp);
-                }
-            } else {
-                processUnAuthenticated(req, resp);
-            }
+            processDenied(req, resp);
         }
     }
 
@@ -102,15 +82,10 @@ public class AuthorizationFilter implements Filter {
                 .anyMatch(r -> r.getRoleName().equals(roleName));
     }
 
-    private void processAuthenticated(HttpServletRequest req, HttpServletResponse resp,
-                                      FilterChain chain)
+    private void processAuthorized(HttpServletRequest req, HttpServletResponse resp,
+                                   FilterChain chain)
             throws IOException, ServletException {
         chain.doFilter(req, resp);
-    }
-
-    private void processUnAuthenticated(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        resp.sendRedirect(req.getContextPath() + "/login");
     }
 
     private void processDenied(HttpServletRequest req, HttpServletResponse resp)

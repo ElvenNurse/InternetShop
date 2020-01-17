@@ -1,6 +1,7 @@
 package mate.academy.internetshop.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +23,14 @@ public class InjectDataController extends HttpServlet {
         user.setPassword("123");
         user.setFirstName("user");
         user.setSecondName("user");
-        user.addRole(Role.of("USER"));
+        user.addRoles(Collections.singleton(Role.of("USER")));
         userService.create(user);
 
         User admin = new User("admin");
         admin.setPassword("123");
         admin.setFirstName("admin");
         admin.setSecondName("admin");
-        admin.addRole(Role.of("ADMIN"));
+        admin.addRoles(Collections.singleton(Role.of("ADMIN")));
         userService.create(admin);
 
         resp.sendRedirect(req.getContextPath() + "/index");

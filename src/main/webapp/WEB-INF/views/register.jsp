@@ -44,7 +44,7 @@ Welcome to Registration page!<br>
 </c:if>
 <c:if test = "${is_logged == 1}">
     <h3>You are logged in, to register new user -
-        <a href="${pageContext.request.contextPath}/login">logout</a></h3>
+        <a href="${pageContext.request.contextPath}/logout">logout</a></h3>
 </c:if>
 <h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>

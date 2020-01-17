@@ -9,7 +9,6 @@ public class User {
     private String password;
     private String firstName;
     private String secondName;
-    private String token;
     private Set<Role> roles = new HashSet<>();
 
     public User(String username) {
@@ -56,14 +55,6 @@ public class User {
         this.secondName = secondName;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -74,6 +65,10 @@ public class User {
 
     public void addRole(Role role) {
         roles.add(role);
+    }
+
+    public void addRoles(Set<Role> newRoles) {
+        roles.addAll(newRoles);
     }
 
     @Override
