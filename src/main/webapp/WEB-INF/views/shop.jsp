@@ -30,7 +30,7 @@ Items :
         </tr>
     </c:forEach>
 </table>
-<h3><a href="${pageContext.request.contextPath}/bucket">Check your bucket</a></h3><br>
+<h3><a href="${pageContext.request.contextPath}/user/bucket">Check your bucket</a></h3><br>
 <h3><a href="${pageContext.request.contextPath}/index">Return to Main Page</a></h3>
 </body>
 </html>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mate.academy.internetshop.lib.Inject;
+import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
@@ -22,7 +23,14 @@ public class IndexController extends HttpServlet {
 
         User user = userService.get(userId);
         req.setAttribute("username", user.getUsername());
+        req.setAttribute("roles", user.getRoles());
 
         req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+    }
+
+    private boolean verifyRole(User user, Role.RoleName roleName) {
+        return user.getRoles()
+                .stream()
+                .anyMatch(r -> r.getRoleName().equals(roleName));
     }
 }

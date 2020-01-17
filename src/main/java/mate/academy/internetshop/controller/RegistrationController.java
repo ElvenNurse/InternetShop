@@ -1,14 +1,15 @@
 package mate.academy.internetshop.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import mate.academy.internetshop.lib.Inject;
+import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
@@ -19,6 +20,10 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        Integer isLogged = req.getSession().getAttribute("user_id") == null ? 0 : 1;
+        req.setAttribute("is_logged", isLogged);
+
         req.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(req, resp);
     }
 
@@ -35,9 +40,8 @@ public class RegistrationController extends HttpServlet {
         }
         newUser.setFirstName(req.getParameter("firstName"));
         newUser.setSecondName(req.getParameter("secondName"));
+        newUser.addRoles(Collections.singleton(Role.of("USER")));
         User user = userService.create(newUser);
-        Cookie cookie = new Cookie("MATE", user.getToken());
-        resp.addCookie(cookie);
 
         HttpSession session = req.getSession(true);
         session.setAttribute("user_id", user.getId());
