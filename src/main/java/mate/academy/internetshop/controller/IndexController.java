@@ -23,11 +23,7 @@ public class IndexController extends HttpServlet {
 
         User user = userService.get(userId);
         req.setAttribute("username", user.getUsername());
-
-        Integer isUser = verifyRole(user, Role.RoleName.USER) ? 1 : 0;
-        Integer isAdmin = verifyRole(user, Role.RoleName.ADMIN) ? 1 : 0;
-        req.setAttribute("is_user", isUser);
-        req.setAttribute("is_admin", isAdmin);
+        req.setAttribute("roles", user.getRoles());
 
         req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
     }

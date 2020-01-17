@@ -21,17 +21,25 @@ public class InjectDataController extends HttpServlet {
             throws ServletException, IOException {
         User user = new User("user");
         user.setPassword("123");
-        user.setFirstName("user");
-        user.setSecondName("user");
+        user.setFirstName("Vasya");
+        user.setSecondName("Pupkin");
         user.addRoles(Collections.singleton(Role.of("USER")));
         userService.create(user);
 
         User admin = new User("admin");
         admin.setPassword("123");
-        admin.setFirstName("admin");
-        admin.setSecondName("admin");
+        admin.setFirstName("Petya");
+        admin.setSecondName("Pyatochkin");
         admin.addRoles(Collections.singleton(Role.of("ADMIN")));
         userService.create(admin);
+
+        User superUser = new User("superUser");
+        superUser.setPassword("123");
+        superUser.setFirstName("Super");
+        superUser.setSecondName("User");
+        superUser.addRoles(Collections.singleton(Role.of("USER")));
+        superUser.addRoles(Collections.singleton(Role.of("ADMIN")));
+        userService.create(superUser);
 
         resp.sendRedirect(req.getContextPath() + "/index");
     }

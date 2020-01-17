@@ -1,23 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="username" scope="request" type="java.lang.String"/>
+<jsp:useBean id="roles" scope="request" type="java.util.Set<mate.academy.internetshop.model.Role>"/>
 
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
         <title>Index</title>
     </head>
     <body>
         <h2>Hello, ${username}! It's Main Page</h2><br>
-        <c:if test = "${is_user == 1}">
-            <h3><a href="${pageContext.request.contextPath}/user/shop">Go to SHOP</a></h3>
-            <h3><a href="${pageContext.request.contextPath}/user/bucket">Check your bucket</a></h3>
-            <h3><a href="${pageContext.request.contextPath}/user/orders">Check your orders</a></h3><br>
-        </c:if>
-        <c:if test = "${is_admin == 1}">
-            <h3><a href="${pageContext.request.contextPath}/servlet/getAllItems">Add items to shop</a></h3>
-            <h3><a href="${pageContext.request.contextPath}/servlet/getAllUsers">Check all users</a></h3>
-            <h3><a href="${pageContext.request.contextPath}/servlet/getAllOrders">Check all orders</a></h3><br>
-        </c:if>
+
+        <c:forEach var="role" items="${roles}">
+            <c:if test = "${role.roleName == 'USER'}">
+                <div id="user_menu">
+                    <jsp:include page="userMenu.jsp"/>
+                </div>
+            </c:if>
+            <c:if test = "${role.roleName == 'ADMIN'}">
+                <div id="admin_menu">
+                    <jsp:include page="adminMenu.jsp"/>
+                </div>
+            </c:if>
+        </c:forEach>
         <h4><a href="${pageContext.request.contextPath}/logout">Logout</a></h4><br>
     </body>
 </html>
