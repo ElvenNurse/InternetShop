@@ -6,11 +6,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.service.OrderService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeleteUserOrderController extends HttpServlet {
+    private static Logger logger = LogManager.getLogger(DeleteUserOrderController.class);
+
     @Inject
     private static OrderService orderService;
 
@@ -18,9 +23,15 @@ public class DeleteUserOrderController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        String orderId = req.getParameter("order_id");
-        Order order = orderService.get(Long.valueOf(orderId));
-        orderService.delete(order);
+        try {
+            String orderId = req.getParameter("order_id");
+            Order order = orderService.get(Long.valueOf(orderId));
+
+            orderService.delete(order);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
+        }
 
         resp.sendRedirect(req.getContextPath() + "/user/orders");
     }

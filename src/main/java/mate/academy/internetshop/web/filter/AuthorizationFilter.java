@@ -15,12 +15,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
+    private static Logger logger = LogManager.getLogger(AuthorizationFilter.class);
     private static final String EMPTY_STRING = "";
 
     @Inject
@@ -63,7 +67,15 @@ public class AuthorizationFilter implements Filter {
         }
 
         Long userId = (Long) req.getSession().getAttribute("user_id");
-        User user = userService.get(userId);
+        User user = null;
+
+        try {
+            user = userService.get(userId);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
+        }
+
         if (verifyRole(user, roleName)) {
             processAuthorized(req, resp, chain);
         } else {

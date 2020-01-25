@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -54,6 +55,9 @@ public class AuthenticationFilter implements Filter {
         } catch (NoSuchElementException e) {
             logger.error("Session with no existing user ID : " + e);
             resp.sendRedirect(req.getContextPath() + "/logout");
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
     }
 

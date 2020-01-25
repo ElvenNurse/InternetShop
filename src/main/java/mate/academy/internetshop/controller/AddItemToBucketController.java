@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
@@ -13,8 +14,12 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 import mate.academy.internetshop.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AddItemToBucketController extends HttpServlet {
+    private static Logger logger = LogManager.getLogger(AddItemToBucketController.class);
+
     @Inject
     private static BucketService bucketService;
     @Inject
@@ -30,10 +35,15 @@ public class AddItemToBucketController extends HttpServlet {
 
         String itemId = req.getParameter("item_id");
 
-        Item item = itemService.get(Long.valueOf(itemId));
-        User user = userService.get(userId);
-        Bucket bucket = bucketService.getByUser(user);
-        bucketService.addItem(bucket, item);
+        try {
+            Item item = itemService.get(Long.valueOf(itemId));
+            User user = userService.get(userId);
+            Bucket bucket = bucketService.getByUser(user);
+            bucketService.addItem(bucket, item);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
+        }
 
         resp.sendRedirect(req.getContextPath() + "/user/shop");
     }
