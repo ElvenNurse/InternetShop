@@ -27,12 +27,6 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User create(User user) throws DataProcessingException {
-        User newUser = new User(user.getUsername());
-        newUser.setPassword(user.getPassword());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setSecondName(user.getSecondName());
-        newUser.addRoles(user.getRoles());
-
         String query = "INSERT INTO users (username, password,"
                 + " first_name, second_name) VALUES (?, ?, ?, ?);";
 
@@ -46,13 +40,14 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             ResultSet rs = statement.getGeneratedKeys();
             while (rs.next()) {
                 Long userId = rs.getLong(1);
-                newUser.setId(userId);
+                user.setId(userId);
             }
-            addRoles(newUser, user.getRoles());
-            return newUser;
+            addRoles(user, user.getRoles());
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to create user: " + e);
         }
+
+        return user;
     }
 
     @Override

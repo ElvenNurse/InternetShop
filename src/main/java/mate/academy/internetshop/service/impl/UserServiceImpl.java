@@ -9,21 +9,11 @@ import mate.academy.internetshop.exception.AuthenticationException;
 import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
-import mate.academy.internetshop.model.Bucket;
-import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.model.User;
-import mate.academy.internetshop.service.BucketService;
-import mate.academy.internetshop.service.OrderService;
 import mate.academy.internetshop.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Inject
-    private static BucketService bucketService;
-
-    @Inject
-    private static OrderService orderService;
 
     @Inject
     private static UserDao userDao;
@@ -46,24 +36,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteById(Long id) throws DataProcessingException {
-        User user = get(id);
-        Bucket bucket = bucketService.getByUser(user);
-        bucketService.delete(bucket);
-        List<Order> userOrders = orderService.getUserOrders(user);
-        for (Order order : userOrders) {
-            orderService.delete(order);
-        }
         return userDao.deleteById(id);
     }
 
     @Override
     public boolean delete(User user) throws DataProcessingException {
-        Bucket bucket = bucketService.getByUser(user);
-        bucketService.delete(bucket);
-        List<Order> userOrders = orderService.getUserOrders(user);
-        for (Order order : userOrders) {
-            orderService.delete(order);
-        }
         return userDao.delete(user);
     }
 

@@ -26,11 +26,11 @@ public class GetAllItemsManagementController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            List<Item> items = null;
-            items = itemService.getAll();
+            List<Item> items = itemService.getAll();
             req.setAttribute("items", items);
         } catch (DataProcessingException e) {
             logger.error(e);
+            req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
 

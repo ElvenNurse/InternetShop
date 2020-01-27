@@ -24,12 +24,12 @@ public class GetAllItemsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        List<Item> items = null;
         try {
-            items = itemService.getAll();
+            List<Item> items = itemService.getAll();
             req.setAttribute("items", items);
         } catch (DataProcessingException e) {
             logger.error(e);
+            req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
 

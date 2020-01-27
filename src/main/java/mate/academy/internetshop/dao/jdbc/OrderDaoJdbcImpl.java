@@ -25,9 +25,6 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
 
     @Override
     public Order create(Order order) throws DataProcessingException {
-        Order newOrder = new Order(order.getUserId());
-        newOrder.setItems(order.getItems());
-
         String query = "INSERT INTO orders (user_id) VALUES (?);";
 
         try (PreparedStatement statement = connection.prepareStatement(query,
@@ -37,13 +34,14 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             ResultSet rs = statement.getGeneratedKeys();
             while (rs.next()) {
                 Long orderId = rs.getLong(1);
-                newOrder.setId(orderId);
+                order.setId(orderId);
             }
-            addItems(newOrder, order.getItems());
-            return newOrder;
+            addItems(order, order.getItems());
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to create order: " + e);
         }
+
+        return order;
     }
 
     @Override

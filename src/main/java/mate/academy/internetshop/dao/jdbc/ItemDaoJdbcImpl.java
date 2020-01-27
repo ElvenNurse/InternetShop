@@ -24,7 +24,6 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public Item create(Item item) throws DataProcessingException {
         String query = "INSERT INTO items (name, price) VALUES (?, ?);";
-        Item newItem = new Item(item.getName(), item.getPrice());
 
         try (PreparedStatement statement = connection.prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -34,13 +33,13 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             ResultSet rs = statement.getGeneratedKeys();
             while (rs.next()) {
                 Long itemId = rs.getLong(1);
-                newItem.setId(itemId);
+                item.setId(itemId);
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to create item: " + e);
         }
 
-        return newItem;
+        return item;
     }
 
     @Override

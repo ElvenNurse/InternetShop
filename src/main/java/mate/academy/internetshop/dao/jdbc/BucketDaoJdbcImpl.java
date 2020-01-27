@@ -25,9 +25,6 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
 
     @Override
     public Bucket create(Bucket bucket) throws DataProcessingException {
-        Bucket newBucket = new Bucket(bucket.getUserId());
-        newBucket.addItems(bucket.getItems());
-
         String query = "INSERT INTO buckets (user_id) VALUES (?);";
 
         try (PreparedStatement statement = connection.prepareStatement(query,
@@ -37,13 +34,14 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             ResultSet rs = statement.getGeneratedKeys();
             while (rs.next()) {
                 Long bucketId = rs.getLong(1);
-                newBucket.setId(bucketId);
+                bucket.setId(bucketId);
             }
-            addItems(newBucket, bucket.getItems());
-            return newBucket;
+            addItems(bucket, bucket.getItems());
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to create bucket: " + e);
         }
+
+        return bucket;
     }
 
     @Override

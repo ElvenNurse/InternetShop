@@ -29,6 +29,7 @@ public class GetAllOrdersController extends HttpServlet {
             req.setAttribute("orders", orders);
         } catch (DataProcessingException e) {
             logger.error(e);
+            req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
 
