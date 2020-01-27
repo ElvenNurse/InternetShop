@@ -6,12 +6,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
-import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class IndexController extends HttpServlet {
+    private static Logger logger = LogManager.getLogger(IndexController.class);
+
     @Inject
     private static UserService userService;
 
@@ -21,16 +25,16 @@ public class IndexController extends HttpServlet {
 
         Long userId = (Long) req.getSession().getAttribute("user_id");
 
-        User user = userService.get(userId);
-        req.setAttribute("username", user.getUsername());
-        req.setAttribute("roles", user.getRoles());
+        try {
+            User user = userService.get(userId);
+            req.setAttribute("username", user.getUsername());
+            req.setAttribute("roles", user.getRoles());
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.setAttribute("dpe_msg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
+        }
 
         req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
-    }
-
-    private boolean verifyRole(User user, Role.RoleName roleName) {
-        return user.getRoles()
-                .stream()
-                .anyMatch(r -> r.getRoleName().equals(roleName));
     }
 }

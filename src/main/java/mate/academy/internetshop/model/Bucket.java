@@ -2,6 +2,7 @@ package mate.academy.internetshop.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Bucket {
     private Long id;
@@ -11,6 +12,11 @@ public class Bucket {
     public Bucket(User user) {
         items = new ArrayList<>();
         userId = user.getId();
+    }
+
+    public Bucket(Long userId) {
+        items = new ArrayList<>();
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -37,11 +43,35 @@ public class Bucket {
         items.add(item);
     }
 
+    public void addItems(List<Item> items) {
+        this.items.removeAll(items);
+        this.items.addAll(items);
+    }
+
     public void deleteItem(Item item) {
         items.remove(item);
     }
 
     public void clear() {
         items.clear();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Bucket bucket = (Bucket) o;
+        return Objects.equals(id, bucket.id)
+                && Objects.equals(items, bucket.items)
+                && userId.equals(bucket.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, items, userId);
     }
 }
