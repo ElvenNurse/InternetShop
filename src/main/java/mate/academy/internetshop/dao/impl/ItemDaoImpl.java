@@ -1,12 +1,12 @@
 package mate.academy.internetshop.dao.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import mate.academy.internetshop.dao.IdGenerator;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.db.Storage;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Item;
 
@@ -29,18 +29,18 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public Item update(Item item) {
+    public Item update(Item item) throws DataProcessingException {
         Item old = get(item.getId()).orElseThrow(() ->
-                        new NoSuchElementException("Can't update item with id "
+                        new DataProcessingException("Can't update item with id "
                                 + item.getId()));
         int index = Storage.items.indexOf(old);
         return Storage.items.set(index, item);
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Long id) throws DataProcessingException {
         Item old = get(id).orElseThrow(() ->
-                        new NoSuchElementException("Can't delete item with id " + id));
+                        new DataProcessingException("Can't delete item with id " + id));
         return delete(old);
     }
 

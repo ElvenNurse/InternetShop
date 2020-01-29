@@ -15,6 +15,7 @@ import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
+import mate.academy.internetshop.model.User;
 
 @Dao
 public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
@@ -50,7 +51,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 Long orderId = rs.getLong("order_id");
                 Long userId = rs.getLong("user_id");
                 Order order = new Order(userId);
@@ -62,6 +63,19 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             throw new DataProcessingException("Failed to get order: " + e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Order> getUserOrders(User user) throws DataProcessingException {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT * FROM orders WHERE user_id = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, user.getId());
+            orders.addAll(getOrders(statement));
+        } catch (SQLException e) {
+            throw new DataProcessingException("Failed to get all orders: " + e);
+        }
+        return orders;
     }
 
     @Override
@@ -112,17 +126,24 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM orders;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Long bucketId = rs.getLong("order_id");
-                Long userId = rs.getLong("user_id");
-                Order order = new Order(userId);
-                order.setId(bucketId);
-                order.setItems(getItems(order));
-                orders.add(order);
-            }
+            orders.addAll(getOrders(statement));
         } catch (SQLException e) {
             throw new DataProcessingException("Failed to get all orders: " + e);
+        }
+        return orders;
+    }
+
+    private List<Order> getOrders(PreparedStatement statement)
+            throws SQLException, DataProcessingException {
+        List<Order> orders = new ArrayList<>();
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            Long bucketId = rs.getLong("order_id");
+            Long userId = rs.getLong("user_id");
+            Order order = new Order(userId);
+            order.setId(bucketId);
+            order.setItems(getItems(order));
+            orders.add(order);
         }
         return orders;
     }

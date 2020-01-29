@@ -15,6 +15,7 @@ import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
+import mate.academy.internetshop.model.User;
 
 @Dao
 public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao {
@@ -47,21 +48,13 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
     @Override
     public Optional<Bucket> get(Long id) throws DataProcessingException {
         String query = "SELECT * FROM buckets WHERE bucket_id = ?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Long bucketId = rs.getLong("bucket_id");
-                Long userId = rs.getLong("user_id");
-                Bucket bucket = new Bucket(userId);
-                bucket.setId(bucketId);
-                bucket.addItems(getItems(bucket));
-                return Optional.of(bucket);
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException("Failed to get bucket: " + e);
-        }
-        return Optional.empty();
+        return getBucket(query, id);
+    }
+
+    @Override
+    public Optional<Bucket> getByUser(User user) throws DataProcessingException {
+        String query = "SELECT * FROM buckets WHERE user_id = ?;";
+        return getBucket(query, user.getId());
     }
 
     @Override
@@ -125,6 +118,24 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             throw new DataProcessingException("Failed to get all buckets: " + e);
         }
         return buckets;
+    }
+
+    private Optional<Bucket> getBucket(String query, Long id) throws DataProcessingException {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Long bucketId = rs.getLong("bucket_id");
+                Long userId = rs.getLong("user_id");
+                Bucket bucket = new Bucket(userId);
+                bucket.setId(bucketId);
+                bucket.addItems(getItems(bucket));
+                return Optional.of(bucket);
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Failed to get bucket: " + e);
+        }
+        return Optional.empty();
     }
 
     private void addItems(Bucket bucket, List<Item> items) throws DataProcessingException {

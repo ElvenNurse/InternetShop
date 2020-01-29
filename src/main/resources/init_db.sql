@@ -31,11 +31,14 @@ CREATE TABLE `internetshop`.`order_items` (
 CREATE TABLE `internetshop`.`users` (
     `user_id` INT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45) NOT NULL,
-    `password` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(128) NOT NULL,
     `first_name` VARCHAR(45) NULL,
     `second_name` VARCHAR(45) NULL,
     PRIMARY KEY (`user_id`),
     UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE);
+
+ALTER TABLE `internetshop`.`users`
+    ADD COLUMN `salt` BLOB NOT NULL AFTER `second_name`;
 
 CREATE TABLE `internetshop`.`roles` (
     `role_id` INT NOT NULL AUTO_INCREMENT,
@@ -71,43 +74,6 @@ ALTER TABLE `internetshop`.`orders`
         ON DELETE NO ACTION
         ON UPDATE NO ACTION;
 
-INSERT INTO `internetshop`.`users` (`username`, `password`, `first_name`, `second_name`) VALUES ('user', '123', 'User', 'Test');
-INSERT INTO `internetshop`.`users` (`username`, `password`, `first_name`, `second_name`) VALUES ('admin', '123', 'Admin', 'Test');
-INSERT INTO `internetshop`.`users` (`username`, `password`, `first_name`, `second_name`) VALUES ('superuser', '123', 'Super', 'User');
-
-INSERT INTO `internetshop`.`roles` (`role_name`) VALUES ('USER');
-INSERT INTO `internetshop`.`roles` (`role_name`) VALUES ('ADMIN');
-
-INSERT INTO `internetshop`.`user_roles` (`user_id`, `role_id`) VALUES ('1', '1');
-INSERT INTO `internetshop`.`user_roles` (`user_id`, `role_id`) VALUES ('2', '2');
-INSERT INTO `internetshop`.`user_roles` (`user_id`, `role_id`) VALUES ('3', '1');
-INSERT INTO `internetshop`.`user_roles` (`user_id`, `role_id`) VALUES ('3', '2');
-
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S10', '999.99');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S11', '1199.99');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S12', '1499.99');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone 7', '800');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone 8', '1000');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone X', '1400');
-
-INSERT INTO `internetshop`.`orders` (`user_id`) VALUES ('1');
-INSERT INTO `internetshop`.`orders` (`user_id`) VALUES ('1');
-INSERT INTO `internetshop`.`orders` (`user_id`) VALUES ('2');
-INSERT INTO `internetshop`.`orders` (`user_id`) VALUES ('2');
-INSERT INTO `internetshop`.`orders` (`user_id`) VALUES ('3');
-INSERT INTO `internetshop`.`orders` (`user_id`) VALUES ('3');
-
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('1', '1');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('2', '2');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('2', '3');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('3', '4');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('3', '5');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('4', '6');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('5', '1');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('5', '4');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('6', '2');
-INSERT INTO `internetshop`.`order_items` (`order_id`, `item_id`) VALUES ('6', '5');
-
 CREATE TABLE `internetshop`.`buckets` (
     `bucket_id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
@@ -136,3 +102,13 @@ CREATE TABLE `internetshop`.`bucket_items` (
         REFERENCES `internetshop`.`items` (`item_id`)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION);
+
+INSERT INTO `internetshop`.`roles` (`role_name`) VALUES ('USER');
+INSERT INTO `internetshop`.`roles` (`role_name`) VALUES ('ADMIN');
+
+INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S10', '999.99');
+INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S11', '1199.99');
+INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S12', '1499.99');
+INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone 7', '800');
+INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone 8', '1000');
+INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone X', '1400');

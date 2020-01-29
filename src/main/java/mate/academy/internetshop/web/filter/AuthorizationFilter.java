@@ -67,19 +67,18 @@ public class AuthorizationFilter implements Filter {
         }
 
         Long userId = (Long) req.getSession().getAttribute("user_id");
-        User user = null;
 
         try {
-            user = userService.get(userId);
+            User user = userService.get(userId);
+
+            if (verifyRole(user, roleName)) {
+                processAuthorized(req, resp, chain);
+            } else {
+                processDenied(req, resp);
+            }
         } catch (DataProcessingException e) {
             logger.error(e);
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
-        }
-
-        if (verifyRole(user, roleName)) {
-            processAuthorized(req, resp, chain);
-        } else {
-            processDenied(req, resp);
         }
     }
 

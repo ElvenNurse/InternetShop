@@ -28,7 +28,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     @Override
     public User create(User user) throws DataProcessingException {
         String query = "INSERT INTO users (username, password,"
-                + " first_name, second_name) VALUES (?, ?, ?, ?);";
+                + " first_name, second_name, salt) VALUES (?, ?, ?, ?, ?);";
 
         try (PreparedStatement statement = connection.prepareStatement(query,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -36,6 +36,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getSecondName());
+            statement.setBytes(5, user.getSalt());
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             while (rs.next()) {
@@ -56,7 +57,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 User user = userSetFields(rs);
                 return Optional.of(user);
             }
@@ -69,13 +70,14 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     @Override
     public User update(User user) throws DataProcessingException {
         String query = "UPDATE users SET username = ?, password = ?, first_name = ?,"
-                + " second_name = ? WHERE user_id = ?;";
+                + " second_name = ?, salt = ? WHERE user_id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getSecondName());
-            statement.setLong(5, user.getId());
+            statement.setBytes(5, user.getSalt());
+            statement.setLong(6, user.getId());
             statement.executeUpdate();
 
             Set<Role> oldRoles = getRoles(user);
@@ -135,7 +137,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 User user = userSetFields(rs);
                 return Optional.of(user);
             }
@@ -149,10 +151,12 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         Long userId = rs.getLong("user_id");
         String username = rs.getString("username");
         String password = rs.getString("password");
+        byte[] salt = rs.getBytes("salt");
         String firstName = rs.getString("first_name");
         String secondName = rs.getString("second_name");
         User user = new User(username);
         user.setPassword(password);
+        user.setSalt(salt);
         user.setFirstName(firstName);
         user.setSecondName(secondName);
         user.setId(userId);
