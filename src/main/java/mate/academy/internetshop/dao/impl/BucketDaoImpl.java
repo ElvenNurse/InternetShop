@@ -1,14 +1,15 @@
 package mate.academy.internetshop.dao.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.IdGenerator;
 import mate.academy.internetshop.db.Storage;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.model.User;
 
 @Dao
 public class BucketDaoImpl implements BucketDao {
@@ -28,18 +29,18 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public Bucket update(Bucket bucket) {
+    public Bucket update(Bucket bucket) throws DataProcessingException {
         Bucket old = get(bucket.getId()).orElseThrow(() ->
-                new NoSuchElementException("Can't update bucket with id "
+                new DataProcessingException("Can't update bucket with id "
                         + bucket.getId()));
         int index = Storage.buckets.indexOf(old);
         return Storage.buckets.set(index, bucket);
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Long id) throws DataProcessingException {
         Bucket old = get(id).orElseThrow(() ->
-                        new NoSuchElementException("Can't delete bucket with id " + id));
+                        new DataProcessingException("Can't delete bucket with id " + id));
         return delete(old);
     }
 
@@ -51,5 +52,13 @@ public class BucketDaoImpl implements BucketDao {
     @Override
     public List<Bucket> getAll() {
         return Storage.buckets;
+    }
+
+    @Override
+    public Optional<Bucket> getByUser(User user) {
+        return Storage.buckets
+                .stream()
+                .filter(b -> b.getUserId().equals(user.getId()))
+                .findFirst();
     }
 }

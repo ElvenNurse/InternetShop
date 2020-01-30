@@ -2,8 +2,6 @@ package mate.academy.internetshop.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import mate.academy.internetshop.dao.OrderDao;
 import mate.academy.internetshop.exception.DataProcessingException;
@@ -27,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order get(Long id) throws DataProcessingException {
         return orderDao.get(id).orElseThrow(() ->
-                new NoSuchElementException("Can't find order with id " + id));
+                new DataProcessingException("Can't find order with id " + id));
     }
 
     @Override
@@ -60,9 +58,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUserOrders(User user) throws DataProcessingException {
-        return getAll()
-                .stream()
-                .filter(order -> order.getUserId().equals(user.getId()))
-                .collect(Collectors.toList());
+        return orderDao.getUserOrders(user);
     }
 }
