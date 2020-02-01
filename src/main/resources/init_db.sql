@@ -105,10 +105,3 @@ CREATE TABLE `internetshop`.`bucket_items` (
 
 INSERT INTO `internetshop`.`roles` (`role_name`) VALUES ('USER');
 INSERT INTO `internetshop`.`roles` (`role_name`) VALUES ('ADMIN');
-
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S10', '999.99');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S11', '1199.99');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('Galaxy S12', '1499.99');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone 7', '800');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone 8', '1000');
-INSERT INTO `internetshop`.`items` (`name`, `price`) VALUES ('iPhone X', '1400');

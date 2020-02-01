@@ -15,13 +15,17 @@
 ## <a name='purpose'></a>Project purpose
 
 This project is a simple version of internet shop.
+
 <hr>
+
 This shop has basic functions for online store such as:
 
 - Registration and log in forms
 - Bucket and order services
 - Two roles: User and Admin
+
 <hr>
+
 This project has authentication and authorization filters, DAO and Service layers, Servlets and JSP pages.
 
 DAO layer has two implementations: inner storage based on List and outer storage based on MySQL DB.
@@ -41,32 +45,50 @@ To run this project you need to install:
 
 - <a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html">Java 11</a>
 - <a href="https://tomcat.apache.org/download-90.cgi">Tomcat</a>
-- <a href="https://www.mysql.com/downloads/">MySQL 8</a>
+- <a href="https://www.mysql.com/downloads/">MySQL 8</a> (optional)
+
 <hr>
 
 Add this project to your IDE as maven project.
 
-Add SDK 11 in project structure
+Add SDK 11 in project structure.
 
 Configure Tomcat:
 - Add artifact
 - Add SDK 11
 
-Use file src/main/resources/init_db.sql to create schema and all the tables required by this app in MySQL DB.
+Change a path to your Log file in **src/main/resources/log4j2.xml** on line 4.
 
-Change username and password to match with MySQL in src/main/java/mate/academy/internetshop/factory/Factory.java class on 42 line.
+<hr>
 
-Change a path to your Log file in src/main/resources/log4j2.xml on line 4.
+To work with MySQL you need to:
+- Use file **src/main/resources/init_db.sql** to create schema and all the tables required by this app in MySQL DB
+- Change username and password to match with MySQL in **src/main/java/mate/academy/internetshop/factory/Factory.java** class on 42 line
 
-Run the project
+<hr>
 
-On first run of the project to create default users open URL: .../{context_path}/inject
+To work with inner Storage you need to:
+
+- Change **src/main/java/mate/academy/internetshop/factory/Factory.java**
+    1. On line 52 **new BucketDaoJdbcImpl(connection)** to **new BucketDaoImpl()**
+    2. On line 66 **new ItemDaoJdbcImpl(connection)** to **new ItemDaoImpl()**
+    3. On line 80 **new OrderDaoJdbcImpl(connection)** to **new OrderDaoImpl()**
+    4. On line 94 **new UserDaoJdbcImpl(connection)** to **new UserDaoImpl()**
+    ![from](src/main/resources/bucket_jdbc.png)
+    ![to](src/main/resources/bucket_storage.png)    
+- Import corresponding classes from **mate.academy.internetshop.dao.impl**
+
+<hr>
+
+Run the project:
+
+For MySQL DAO only **on first run** of the project, for inner Storage **on every launch** to create default users open URL: .../{context_path}/inject
 
 ![inject path example](src/main/resources/inject_url.png) 
 
-By default there are one user with an USER role (login = "user", password = "123"),
-one with an ADMIN role (login = "admin", password = "123"),
-and one with both roles (login = "superuser", password = "123").
+<p>By default there are one user with an USER role (login = "user", password = "123"),<br>
+one with an ADMIN role (login = "admin", password = "123"),<br>
+and one with both roles (login = "superuser", password = "123").</p>
 
 ## <a name='author'></a>Author
 [Andrii Voloshyn](https://github.com/ElvenNurse)

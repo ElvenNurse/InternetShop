@@ -36,6 +36,7 @@ public class InjectDataController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
+
             User user = new User("user");
             user.setPassword("123");
             user.setFirstName("Vasya");
@@ -58,20 +59,27 @@ public class InjectDataController extends HttpServlet {
             superUser.addRoles(Collections.singleton(Role.of("ADMIN")));
             userService.create(superUser);
 
-            Item itemS10 = itemService.get(1L);
-            Item itemI7 = itemService.get(4L);
+            Item itemS10 = new Item("Galaxy S10", 999.99);
+            itemService.create(itemS10);
+            Item itemS11 = new Item("Galaxy S11", 1199.99);
+            itemService.create(itemS11);
+            Item itemS12 = new Item("Galaxy S12", 1499.99);
+            itemService.create(itemS12);
+            Item itemI7 = new Item("iPhone 7", 800D);
+            itemService.create(itemI7);
+            Item itemI8 = new Item("iPhone 8", 1000D);
+            itemService.create(itemI8);
+            Item itemI10 = new Item("iPhone X", 1400D);
+            itemService.create(itemI10);
+
             List<Item> itemSetFirst = new ArrayList<>();
             itemSetFirst.add(itemS10);
             itemSetFirst.add(itemI7);
 
-            Item itemS11 = itemService.get(2L);
-            Item itemS12 = itemService.get(3L);
             List<Item> itemSetSecond = new ArrayList<>();
             itemSetSecond.add(itemS11);
             itemSetSecond.add(itemS12);
 
-            Item itemI8 = itemService.get(5L);
-            Item itemI10 = itemService.get(6L);
             List<Item> itemSetThird = new ArrayList<>();
             itemSetThird.add(itemI8);
             itemSetThird.add(itemI10);
