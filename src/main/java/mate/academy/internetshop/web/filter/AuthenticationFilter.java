@@ -57,6 +57,7 @@ public class AuthenticationFilter implements Filter {
             resp.sendRedirect(req.getContextPath() + "/logout");
         } catch (DataProcessingException e) {
             logger.error(e);
+            req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
     }
