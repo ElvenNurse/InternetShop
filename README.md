@@ -49,13 +49,13 @@ To run this project you need to install:
 
 <hr>
 
-Add this project to your IDE as maven project.
+Add this project to your IDE as Maven project.
 
-Add SDK 11 in project structure.
+Add Java SDK 11 in project structure.
 
 Configure Tomcat:
 - Add artifact
-- Add SDK 11
+- Add Java SDK 11
 
 Change a path to your Log file in **src/main/resources/log4j2.xml** on line 4.
 
@@ -82,9 +82,13 @@ To work with inner Storage you need to:
 
 Run the project:
 
-For MySQL DAO only **on first run** of the project, for inner Storage **on every launch** to create default users open URL: .../{context_path}/inject
+Main page is at URL: .../{context_path}/index
 
-![inject path example](src/main/resources/inject_url.png) 
+![index_url](src/main/resources/index_url.png)
+
+For MySQL DAO only **on first run** of the project, for inner Storage **on every launch**, to create default users open URL: .../{context_path}/inject
+
+![inject url](src/main/resources/inject_url.png)
 
 <p>By default there are one user with an USER role (login = "user", password = "123"),<br>
 one with an ADMIN role (login = "admin", password = "123"),<br>
