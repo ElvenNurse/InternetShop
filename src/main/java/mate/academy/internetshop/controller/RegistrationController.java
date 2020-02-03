@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class RegistrationController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(RegistrationController.class);
+    private static final Logger LOGGER = LogManager.getLogger(RegistrationController.class);
 
     @Inject
     private static UserService userService;
@@ -53,7 +53,7 @@ public class RegistrationController extends HttpServlet {
             HttpSession session = req.getSession(true);
             session.setAttribute("user_id", user.getId());
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }

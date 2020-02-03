@@ -19,7 +19,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class AuthenticationFilter implements Filter {
-    private static Logger logger = LogManager.getLogger(AuthenticationFilter.class);
+    private static final Logger LOGGER = LogManager.getLogger(AuthenticationFilter.class);
+
     @Inject
     private static UserService userService;
 
@@ -53,10 +54,10 @@ public class AuthenticationFilter implements Filter {
             userService.get(userId);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (NoSuchElementException e) {
-            logger.error("Session with no existing user ID : " + e);
+            LOGGER.error("Session with no existing user ID : " + e);
             resp.sendRedirect(req.getContextPath() + "/logout");
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }

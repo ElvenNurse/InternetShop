@@ -8,7 +8,7 @@ public class Role {
     private Long id;
     private RoleName roleName;
 
-    public Role(RoleName roleName) {
+    private Role(RoleName roleName) {
         this.roleName = roleName;
         this.setId(IdGenerator.getRoleId());
     }

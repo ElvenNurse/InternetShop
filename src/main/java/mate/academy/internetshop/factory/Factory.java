@@ -24,7 +24,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Factory {
-    private static Logger logger = LogManager.getLogger(Factory.class);
+    private static final Logger LOGGER = LogManager.getLogger(Factory.class);
+
     private static BucketDao bucketDaoInstance;
     private static BucketService bucketServiceInstance;
     private static ItemDao itemDaoInstance;
@@ -40,9 +41,9 @@ public class Factory {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internetshop?"
                     + "user=root&password=mysqlpassword&useUnicode=true&serverTimezone=EET");
-            logger.debug("Connection to DB established");
+            LOGGER.debug("Connection to DB established");
         } catch (ClassNotFoundException | SQLException e) {
-            logger.error("Can't establish connection to DB: ", e);
+            LOGGER.error("Can't establish connection to DB: ", e);
             e.printStackTrace();
         }
     }

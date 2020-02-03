@@ -15,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GetAllUsersController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(GetAllUsersController.class);
+    private static final Logger LOGGER = LogManager.getLogger(GetAllUsersController.class);
 
     @Inject
     private static UserService userService;
@@ -30,7 +30,7 @@ public class GetAllUsersController extends HttpServlet {
             req.setAttribute("greeting", "Mates");
             req.setAttribute("users", users);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }

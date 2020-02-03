@@ -18,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DeleteItemFromBucketController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(DeleteItemFromBucketController.class);
+    private static final Logger LOGGER = LogManager.getLogger(DeleteItemFromBucketController.class);
 
     @Inject
     private static BucketService bucketService;
@@ -41,7 +41,7 @@ public class DeleteItemFromBucketController extends HttpServlet {
 
             bucketService.deleteItem(bucket, item);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }

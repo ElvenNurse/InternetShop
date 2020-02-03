@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class AddUserController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(AddUserController.class);
+    private static final Logger LOGGER = LogManager.getLogger(AddUserController.class);
 
     @Inject
     private static UserService userService;
@@ -34,7 +34,7 @@ public class AddUserController extends HttpServlet {
         try {
             userService.create(newUser);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
