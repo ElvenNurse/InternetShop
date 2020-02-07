@@ -4,8 +4,8 @@
     <title>Admin Menu</title>
 </head>
 <body>
-<h3><a href="${pageContext.request.contextPath}/servlet/getAllItems">Add items to shop</a></h3>
-<h3><a href="${pageContext.request.contextPath}/servlet/getAllUsers">Check all users</a></h3>
-<h3><a href="${pageContext.request.contextPath}/servlet/getAllOrders">Check all orders</a></h3><br>
+<h3><a href="${pageContext.request.contextPath}/servlet/getAllItems">Manage items</a></h3>
+<h3><a href="${pageContext.request.contextPath}/servlet/getAllUsers">Manage users</a></h3>
+<h3><a href="${pageContext.request.contextPath}/servlet/getAllOrders">Manage orders</a></h3><br>
 </body>
 </html>

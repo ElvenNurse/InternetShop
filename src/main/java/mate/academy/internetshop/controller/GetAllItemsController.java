@@ -15,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GetAllItemsController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(GetAllItemsController.class);
+    private static final Logger LOGGER = LogManager.getLogger(GetAllItemsController.class);
 
     @Inject
     private static ItemService itemService;
@@ -28,7 +28,7 @@ public class GetAllItemsController extends HttpServlet {
             List<Item> items = itemService.getAll();
             req.setAttribute("items", items);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }

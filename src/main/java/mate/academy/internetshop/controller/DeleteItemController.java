@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DeleteItemController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(DeleteItemController.class);
+    private static final Logger LOGGER = LogManager.getLogger(DeleteItemController.class);
 
     @Inject
     private static ItemService itemService;
@@ -27,7 +27,7 @@ public class DeleteItemController extends HttpServlet {
 
             itemService.deleteById(Long.valueOf(itemId));
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }

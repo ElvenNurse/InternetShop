@@ -56,7 +56,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) throws DataProcessingException {
+    public List<Order> getUserOrders(User user) {
         return Storage.orders
                 .stream()
                 .filter(o -> o.getUserId().equals(user.getId()))

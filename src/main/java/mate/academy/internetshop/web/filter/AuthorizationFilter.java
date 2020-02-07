@@ -24,7 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
-    private static Logger logger = LogManager.getLogger(AuthorizationFilter.class);
+    private static final Logger LOGGER = LogManager.getLogger(AuthorizationFilter.class);
     private static final String EMPTY_STRING = "";
 
     @Inject
@@ -77,7 +77,8 @@ public class AuthorizationFilter implements Filter {
                 processDenied(req, resp);
             }
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
+            req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
     }

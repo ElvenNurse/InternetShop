@@ -19,7 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DeleteUserController extends HttpServlet {
-    private static Logger logger = LogManager.getLogger(DeleteUserController.class);
+    private static final Logger LOGGER = LogManager.getLogger(DeleteUserController.class);
 
     @Inject
     private static BucketService bucketService;
@@ -45,7 +45,7 @@ public class DeleteUserController extends HttpServlet {
             }
             userService.delete(user);
         } catch (DataProcessingException e) {
-            logger.error(e);
+            LOGGER.error(e);
             req.setAttribute("dpe_msg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/dbError.jsp").forward(req, resp);
         }
