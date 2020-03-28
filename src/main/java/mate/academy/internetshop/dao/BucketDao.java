@@ -1,7 +1,6 @@
 package mate.academy.internetshop.dao;
 
 import java.util.Optional;
-
 import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.User;

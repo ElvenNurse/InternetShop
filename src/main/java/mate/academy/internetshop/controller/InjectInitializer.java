@@ -2,7 +2,6 @@ package mate.academy.internetshop.controller;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
 import mate.academy.internetshop.lib.Injector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

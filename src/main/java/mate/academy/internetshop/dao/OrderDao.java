@@ -1,7 +1,6 @@
 package mate.academy.internetshop.dao;
 
 import java.util.List;
-
 import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.model.User;

@@ -1,7 +1,6 @@
 package mate.academy.internetshop.model;
 
 import java.util.Objects;
-
 import mate.academy.internetshop.dao.IdGenerator;
 
 public class Role {

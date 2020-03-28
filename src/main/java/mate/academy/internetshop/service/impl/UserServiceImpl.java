@@ -2,7 +2,6 @@ package mate.academy.internetshop.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.exception.AuthenticationException;
 import mate.academy.internetshop.exception.DataProcessingException;

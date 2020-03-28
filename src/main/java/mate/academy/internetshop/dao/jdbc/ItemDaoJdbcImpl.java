@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;

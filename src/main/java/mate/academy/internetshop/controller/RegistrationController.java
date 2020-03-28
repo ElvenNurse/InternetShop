@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;

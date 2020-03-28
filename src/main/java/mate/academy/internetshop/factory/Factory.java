@@ -3,7 +3,6 @@ package mate.academy.internetshop.factory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.dao.OrderDao;
